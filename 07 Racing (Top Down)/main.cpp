@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <math.h>
 using namespace sf;
 
 const int num=8; //checkpoints
