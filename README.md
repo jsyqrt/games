@@ -17,3 +17,4 @@ g++ main.o -o main.exe -lsfml-graphics -lsfml-window -lsfml-system # to link.
 ```
 ### NOTICE! ALL CODE FROM HERE: https://www.youtube.com/channel/UCC7qpnId5RIQruKDJOt2exw
 
+# Play these games and if you like it then give a star to this repo.
