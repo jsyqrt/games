@@ -9,4 +9,4 @@
   * Use the cd command to change into the games directory, by using ```cd games```
   * After changing into the games directory, use the command ```cd 02\ Doodle\ Jump/``` to change into the Doodle Jump directory
   * Once in the directory, use the command ```g++ -std=c++11 -c main.cpp``` to compile the game
-  * After compiling, use ```g++ main.o -o main.exe -lsfml-graphics -lsfml-window -lsfml-system```
+  * After compiling, use ```g++ main.o -o main.exe -lsfml-graphics -lsfml-window -lsfml-system``` 
