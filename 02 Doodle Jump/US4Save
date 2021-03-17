@@ -1,9 +1,9 @@
-char choice;
+char userChoice;
 string fileName;
-string progress;
+string fileProgress;
 
 cout << "Load a new game? Y or N";
-cin >> choice;
+cin >> userChoice;
 
 if (choice == 'Y' || choice == 'y') {
   cout << "Enter your name of the file";
@@ -14,12 +14,12 @@ if (choice == 'Y' || choice == 'y') {
   //If user clicks the X box in the top right corner, this can prompt them asking if they want to save
 
 cout<< "You chose to exit. Do you wish to save your current progress to continue the game later? Y or N";
-  cin>>choice;
+  cin>> userChoice;
 
-  if (choice=='Y') {
+  if (userChoice=='Y') {
 
         cout << "Enter the name of the file in which you want to save your progress: \n";
-        cin >> progress;
+        cin >> fileProgress;
         ofstream fout((progress +".save").c_str(), ios::binary);
         //output all the variables that determine a player's progress in the file.
       }
