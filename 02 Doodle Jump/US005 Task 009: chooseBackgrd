@@ -5,7 +5,7 @@ using namespace std;
 
 chooseBackgrd() {
 ofstream fout;
-fout.open("background.png");
+fout.open("background.jpeg");
 
 string userChoice;
 cin >> userChoice;
