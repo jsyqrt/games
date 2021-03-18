@@ -1,0 +1,17 @@
+//this is a method using chooseChar for character sprite selection.
+#include <fstream>
+#include <iostream>
+using namespace std;
+
+chooseChar() {
+ofstream fout;
+fout.open("spongebob.png");
+
+string userChoice;
+cin >> userChoice;
+
+img character = userChoice + ".png";
+cout << "You chose Spongebob as your character!" << endl;
+
+fout.close();
+}

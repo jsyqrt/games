@@ -1,0 +1,17 @@
+//this is a method using chooseBackgrd for character background selection.
+#include <fstream>
+#include <iostream>
+using namespace std;
+
+chooseBackgrd() {
+ofstream fout;
+fout.open("background.jpeg");
+
+string userChoice;
+cin >> userChoice;
+
+img character = userChoice + ".jpeg";
+cout << "You chose Bikini Bottom as your background!" << endl;
+
+fout.close();
+}
