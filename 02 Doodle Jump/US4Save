@@ -12,6 +12,76 @@ if (choice == 'Y' || choice == 'y') {
   }
 
   //If user clicks the X box in the top right corner, this can prompt them asking if they want to save
+//found this information online about making a pop up dialog box, asking the user if they want to quit
+using System;
+using System.Runtime.InteropServices;
+ 
+namespace WBG
+{
+    /// <see>https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-messagebox</see>
+    public class MessageBox
+    {
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern System.IntPtr GetActiveWindow();
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern int MessageBox(IntPtr hwnd, String lpText, String lpCaption, uint uType);
+ 
+        public static System.IntPtr GetWindowHandle()
+        {
+            return GetActiveWindow();
+        }
+ 
+/// <summary>
+        /// Shows Message Box with button type.
+        /// </summary>
+        /// <param name="text">Are you sure you want to exit? / content.</param>
+        /// <param name="caption">Exit?</param>
+        /// <remarks>types: AbortRetryIgnore, CancelTryContinue, Help, OK, OkCancel, RetryCancel, YesNo, YesNoCancel</remarks>
+        /// <example>Message_Box("Exit", "Exit", "OK");</example>
+        /// <returns>YES, NO</returns>
+        public string Message_Box(string text, string caption, string type)
+        {
+            try
+            {
+                string DialogResult = string.Empty;
+                uint MB_YESNO = (uint)(0x00000004L | 0x00000040L);
+                uint MB_YESNOCANCEL = (uint)(0x00000003L | 0x00000040L);
+                int intresult = -1;
+                string strResult = string.Empty;
+ 
+                switch (type)
+                {
+                    case "YesNo":
+                        intresult = MessageBox(GetWindowHandle(), text, caption, MB_YESNO);
+                        break;
+                    case "YesNoCancel":
+                        intresult = MessageBox(GetWindowHandle(), text, caption, MB_YESNOCANCEL);
+                        break;
+                    default:
+                        intresult = MessageBox(GetWindowHandle(), text, caption, (uint)(0x00000000L | 0x00000010L));
+                        break;
+                }
+ 
+                switch(intresult)
+                {
+                    case 1:
+                        strResult = "YES";
+                        break;
+                    case 2:
+                        strResult = "NO";
+                        break;
+ 
+                }
+ 
+                return strResult;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+    }
+}
 
 cout<< "You chose to exit. Do you wish to save your current progress to continue the game later? Y or N";
   cin>> userChoice;
