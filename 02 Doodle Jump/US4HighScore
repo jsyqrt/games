@@ -1,0 +1,39 @@
+#include <iostream.h>
+#include <stdio.h>
+using namespace std;
+
+void highscore(int score, int highscore) {
+if (score > highscore)
+highscore = score;
+
+cout << "The High Score is: " << highscore << endl;
+return 0;
+}
+
+//If there's a list of highscores, then
+void highscore (int score, string scorename, int highscore[], string scorename[]) {
+long int temp;
+long int temp2;
+string tempname;
+string tempname2;
+long int highscore[5];
+long int score;
+string scorename;
+string highscorename[5];
+
+if (score > highscore[0]) {
+temp = highscore[0];
+tempname = highscorename[0];
+highscore[0] = score;
+highscorename[0] = score;
+
+for (int i = 0; i < listsize; i++) {
+temp2 = highscore[i];
+tempname2 = highscorename[i];
+highscore[i] = temp;
+highscorename[i] = tempname;
+temp = temp2;
+tempname = tempname2;
+}
+}
+}
