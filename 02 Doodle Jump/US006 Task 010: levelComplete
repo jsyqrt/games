@@ -1,0 +1,15 @@
+int levelComplete = 0;
+	
+		if (levelComplete > 0) {
+	
+			//user story 6 task 10
+			//opens the patrick star character sprite for the user
+      cout << "New character unlock for completing the level!" << endl;
+			ofstream fout;
+			fout.open("patrickstar.png");
+      fout.close();
+    } 
+    else
+    {
+			cout << "Level failed! No new character unlock. Keep trying!" << endl;
+		}	
