@@ -33,6 +33,12 @@ bool check()
 
 int main()
 {
+
+    /*
+    A boolean created in order to signal the end of the game
+    */
+    bool endGame = false;
+
     srand(time(0));	 
 
 	RenderWindow window(VideoMode(320, 480), "The Game!");
@@ -67,86 +73,113 @@ int main()
 			  else if (e.key.code==Keyboard::Right) dx=1;
 		}
 
-	if (Keyboard::isKeyPressed(Keyboard::Down)) delay=0.05;
+        /*
+        If the end of the game has been triggered from pieces
+        stacking too high, this 'if' statement is skipped along
+        with any further movement inside the game window.
+        */
+        if (endGame != true)
+        {
 
-	//// <- Move -> ///
-	for (int i=0;i<4;i++)  { b[i]=a[i]; a[i].x+=dx; }
-    if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
+            if (Keyboard::isKeyPressed(Keyboard::Down)) delay=0.05;
 
-	//////Rotate//////
-	if (rotate)
-	  {
-		Point p = a[1]; //center of rotation
-		for (int i=0;i<4;i++)
-		  {
-			int x = a[i].y-p.y;
-			int y = a[i].x-p.x;
-			a[i].x = p.x - x;
-			a[i].y = p.y + y;
-	 	  }
-   	    if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
-	  }
+            //// <- Move -> ///
+            for (int i=0;i<4;i++)  { b[i]=a[i]; a[i].x+=dx; }
+            if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
 
-	///////Tick//////
-	if (timer>delay)
-	  {
-	    for (int i=0;i<4;i++) { b[i]=a[i]; a[i].y+=1; }
+            //////Rotate//////
+            if (rotate)
+            {
+                Point p = a[1]; //center of rotation
+                for (int i=0;i<4;i++)
+                {
+                    int x = a[i].y-p.y;
+                    int y = a[i].x-p.x;
+                    a[i].x = p.x - x;
+                    a[i].y = p.y + y;
+                }
+                if (!check()) for (int i=0;i<4;i++) a[i]=b[i];
+            }
 
-		if (!check())
-		{
-		 for (int i=0;i<4;i++) field[b[i].y][b[i].x]=colorNum;
+            ///////Tick//////
+            if (timer>delay)
+            {
+                for (int i=0;i<4;i++) { b[i]=a[i]; a[i].y+=1; }
 
-		 colorNum=1+rand()%7;
-		 int n=rand()%7;
-		 for (int i=0;i<4;i++)
-		   {
-		    a[i].x = figures[n][i] % 2;
-		    a[i].y = figures[n][i] / 2;
-		   }
-		}
+                if (!check())
+                {
+                for (int i=0;i<4;i++) field[b[i].y][b[i].x]=colorNum;
 
-	  	timer=0;
-	  }
+                colorNum=1+rand()%7;
+                int n=rand()%7;
+                for (int i=0;i<4;i++)
+                {
+                    a[i].x = figures[n][i] % 2;
+                    a[i].y = figures[n][i] / 2;
+                }
+                }
 
-	///////check lines//////////
-    int k=M-1;
-	for (int i=M-1;i>0;i--)
-	{
-		int count=0;
-		for (int j=0;j<N;j++)
-		{
-		    if (field[i][j]) count++;
-		    field[k][j]=field[i][j];
-		}
-		if (count<N) k--;
-	}
+                timer=0;
+            }
 
-    dx=0; rotate=0; delay=0.3;
+            ///////check lines//////////
+            int k=M-1;
+            for (int i=M-1;i>0;i--)
+            {
+                int count=0;
+                for (int j=0;j<N;j++)
+                {
+                    if (field[i][j]) count++;
+                    field[k][j]=field[i][j];
+                }
+                if (count<N) k--;
+            }
 
-    /////////draw//////////
-    window.clear(Color::White);	
-    window.draw(background);
-		  
-	for (int i=0;i<M;i++)
-	 for (int j=0;j<N;j++)
-	   {
-         if (field[i][j]==0) continue;
-		 s.setTextureRect(IntRect(field[i][j]*18,0,18,18));
-		 s.setPosition(j*18,i*18);
-		 s.move(28,31); //offset
-		 window.draw(s);
-	   }
+            /*
+            Row 2 in the 2D array field (the game field) is the row where the
+            top-most portion of each new puzzle piece exists. Since there is
+            always more of the puzzle piece below this row, this is the
+            vertical threshold that, when met from pieces stacking too high,
+            triggers the end of the game by making endGame true.
+            */
+            for (int z = 0; z < 10; z++)
+            {
 
-	for (int i=0;i<4;i++)
-	  {
-		s.setTextureRect(IntRect(colorNum*18,0,18,18));
-		s.setPosition(a[i].x*18,a[i].y*18);
-		s.move(28,31); //offset
-		window.draw(s);
-	  }
+                if (field[2][z] != 0)
+                {
+                    endGame = true;
+                }
 
-	window.draw(frame);
- 	window.display();
+            }
+
+        }
+
+        dx=0; rotate=0; delay=0.3;
+
+        /////////draw//////////
+        window.clear(Color::White);	
+        window.draw(background);
+            
+        for (int i=0;i<M;i++)
+        for (int j=0;j<N;j++)
+        {
+            if (field[i][j]==0) continue;
+            s.setTextureRect(IntRect(field[i][j]*18,0,18,18));
+            s.setPosition(j*18,i*18);
+            s.move(28,31); //offset
+            window.draw(s);
+        }
+
+        for (int i=0;i<4;i++)
+        {
+            s.setTextureRect(IntRect(colorNum*18,0,18,18));
+            s.setPosition(a[i].x*18,a[i].y*18);
+            s.move(28,31); //offset
+            window.draw(s);
+        }
+
+        window.draw(frame);
+        window.display();
 	}
 
     return 0;
